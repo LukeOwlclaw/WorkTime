@@ -5,6 +5,6 @@ Sits at top of screen and show active hours and minutes.
 
 ![screenshot](worktime.png)
 
-[Download](app\bin\Release\WorkTime.exe)
+[Download](app/bin/Release/WorkTime.exe?raw=true)
 
 Note: Click between "Active:" and counter to drag window to the desired position.
