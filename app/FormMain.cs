@@ -25,6 +25,7 @@ namespace Network_Monitor_Sample
 
         public const int WM_NCLBUTTONDOWN = 0xA1;
         private TextBox TextBoxLog;
+        private Label labelMemory;
         public const int HT_CAPTION = 0x2;
 
         [DllImportAttribute("user32.dll")]
@@ -81,6 +82,7 @@ namespace Network_Monitor_Sample
             this.LabelActiveTimeValue = new System.Windows.Forms.Label();
             this.TimerCounter = new System.Windows.Forms.Timer(this.components);
             this.TextBoxLog = new System.Windows.Forms.TextBox();
+            this.labelMemory = new System.Windows.Forms.Label();
             this.SuspendLayout();
             // 
             // LabelTotalTime
@@ -132,6 +134,14 @@ namespace Network_Monitor_Sample
             this.TextBoxLog.TabIndex = 5;
             this.TextBoxLog.TextChanged += new System.EventHandler(this.TextBoxLog_TextChanged);
             // 
+            // labelMemory
+            // 
+            this.labelMemory.Location = new System.Drawing.Point(0, -2);
+            this.labelMemory.Name = "labelMemory";
+            this.labelMemory.Size = new System.Drawing.Size(41, 23);
+            this.labelMemory.TabIndex = 6;
+            this.labelMemory.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            // 
             // FormMain
             // 
             this.AutoScaleBaseSize = new System.Drawing.Size(5, 13);
@@ -139,6 +149,7 @@ namespace Network_Monitor_Sample
             this.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
             this.ClientSize = new System.Drawing.Size(370, 104);
             this.ControlBox = false;
+            this.Controls.Add(this.labelMemory);
             this.Controls.Add(this.TextBoxLog);
             this.Controls.Add(this.LabelActiveTimeValue);
             this.Controls.Add(this.LabelTotalTimeValue);
@@ -213,6 +224,10 @@ namespace Network_Monitor_Sample
                 var active = ActiveTime + (DateTime.Now - StartOfLastActivity.Value);
                 this.LabelActiveTimeValue.Text = new DateTime(active.Ticks).ToString(format);
             }
+
+            var memTotal = new Microsoft.VisualBasic.Devices.ComputerInfo().TotalPhysicalMemory;
+            var memAvailable = new Microsoft.VisualBasic.Devices.ComputerInfo().AvailablePhysicalMemory;
+            labelMemory.Text = ((memTotal - memAvailable) / 1024 / 1024).ToString();
         }
 
         private void LabelActiveTime_Click(object sender, EventArgs e)
